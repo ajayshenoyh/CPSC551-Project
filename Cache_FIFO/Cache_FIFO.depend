@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1511223083 source:c:\users\ajays\onedrive\documents\c++\cache_fifo\main.cpp
+	<iostream>
+	<stdio.h>
+
