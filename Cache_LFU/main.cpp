@@ -26,8 +26,10 @@ int main(int argc, char** argv) {
     LFU_Analysis analysis;
     char yes;
     char choice;
-    cout << "Do you want input(i) custom accesses or use standard(s) ones?\n";
-    cin >> choice;
+    int pages;
+    //    cout << "Do you want input(i) custom accesses or use standard(s) ones?\n";
+    //    cin >> choice;
+    choice = 's';
     if (choice == 'i') {
         do {
             string input;
@@ -37,16 +39,33 @@ int main(int argc, char** argv) {
             cin >> yes;
         } while (yes != 'n');
     } else if (choice == 's') {
-        analysis.add_access("aaaaaaaa");
-        analysis.add_access("bbbbbbbb");
-        analysis.add_access("cccccccc");
-        analysis.add_access("hhhhhhhh");
-        analysis.add_access("cccccccc");
-        analysis.add_access("cccccccc");
-        analysis.add_access("aaaaaaaa");
-        analysis.add_access("dddddddd");
+        //        cout << "How many pages are there?";
+        //        cin >> pages;
+        analysis.set_number_of_pages(3);
+        analysis.add_access("7");
+        analysis.add_access("0");
+        analysis.add_access("1");
+        analysis.add_access("2");
+        analysis.add_access("0");
+        analysis.add_access("3");
+        analysis.add_access("0");
+        analysis.add_access("4");
+        analysis.add_access("2");
+        analysis.add_access("3");
+        analysis.add_access("0");
+        analysis.add_access("3");
+        analysis.add_access("0");
+        analysis.add_access("3");
+        analysis.add_access("2");
+        analysis.add_access("1");
+        analysis.add_access("2");
+        analysis.add_access("0");
+        analysis.add_access("1");
+        analysis.add_access("7");
+        analysis.add_access("0");
+        analysis.add_access("1");
     }
-    analysis.print();
+//    analysis.print();
     return 0;
 }
 
