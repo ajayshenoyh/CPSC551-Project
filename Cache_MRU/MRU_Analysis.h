@@ -71,11 +71,15 @@ public:
     void add_access(std::string a);
     int find_MRU();
     bool page_hit(std::string a);
+    void add_for_presentation(std::string a);
+    void presentation();
     MRU_Analysis();
     MRU_Analysis(const MRU_Analysis& orig);
     virtual ~MRU_Analysis();
 private:
     std::vector<access> accesses;
+    std::vector< std::vector<std::string> > display_all;
+    //std::vector<std::string>> ;
     int number_of_pages;
 };
 

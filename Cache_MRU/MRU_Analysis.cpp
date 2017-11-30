@@ -58,6 +58,7 @@ void MRU_Analysis::add_access(std::string a) {
         accesses.erase(accesses.begin() + access_to_replace);
         accesses.insert(accesses.begin() + access_to_replace, newA);
     }
+    add_for_presentation(a);
     update_uses();
 }
 
@@ -80,6 +81,40 @@ bool MRU_Analysis::page_hit(std::string a) {
         }
     }
     return false;
+}
+
+void MRU_Analysis::add_for_presentation(std::string a) {
+    std::vector<std::string> this_frame;
+    for (int i = 0; i < accesses.size(); i++) {
+        this_frame.push_back(accesses[i].get_name());
+    }
+    this_frame.push_back(a);
+    display_all.push_back(this_frame);
+}
+
+void MRU_Analysis::presentation() {
+    int size = display_all.size();
+    std::cout << "Contents are:\n";
+    std::cout << "===========================================================================================================================================================================================" << std::endl;
+    std::cout << "\tPage:\t";
+    for (int i = 0; i < size; i++) {
+        std::cout << i << "\t";
+    }
+    std::cout << "\n\t\t";
+    for (int i = 0; i < size; i++) {
+        std::cout << display_all[i][display_all[i].size() - 1] << "\t";
+    }
+    std::cout << "\n===========================================================================================================================================================================================" << std::endl;
+    for (int i = 0; i < number_of_pages; i++) {
+        std::cout << "\t\t";
+        for (int j = 0; j < size; j++) {
+            if (display_all[j].size()-1 > i) {
+                std::cout << display_all[j][i] << "\t";
+            }
+        }
+        std::cout << std::endl;
+    }
+    std::cout << display_all[0][0] << "\t";
 }
 
 MRU_Analysis::MRU_Analysis() {
