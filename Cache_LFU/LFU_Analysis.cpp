@@ -28,14 +28,24 @@ void LFU_Analysis::set_number_of_pages(int n) {
     }
 }
 
+int LFU_Analysis::get_number_of_pages() {
+    return number_of_pages;
+}
+
+int LFU_Analysis::get_page_faults() {
+    return page_faults;
+}
+
 void LFU_Analysis::add_access(std::string a) {
     if (page_hit(a)) {
     } else if (accesses.size() != (number_of_pages)) {
         accesses.push_back(a);
+        page_faults++;
         std::cout << "page fault " << a << " added\n";
     } else {
         int access_to_replace = find_LFU();
         std::cout << "page fault " << accesses[access_to_replace].get_name() << " replaced with " << a << std::endl;
+        page_faults++;
         access newA(a);
         accesses.erase(accesses.begin() + access_to_replace);
         accesses.insert(accesses.begin() + access_to_replace, newA);
@@ -66,10 +76,12 @@ bool LFU_Analysis::page_hit(std::string a) {
 
 LFU_Analysis::LFU_Analysis() {
     set_number_of_pages(max_page_number);
+    page_faults = 0;
 }
 
 LFU_Analysis::LFU_Analysis(const LFU_Analysis& orig) {
     set_number_of_pages(max_page_number);
+    page_faults = 0;
 }
 
 LFU_Analysis::~LFU_Analysis() {

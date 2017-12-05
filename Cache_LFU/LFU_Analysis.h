@@ -15,6 +15,7 @@
 #define LFU_ANALYSIS_H
 #include <string>
 #include <vector>
+
 struct access {
 private:
     std::string access_name;
@@ -61,11 +62,10 @@ class LFU_Analysis {
 public:
     void print();
     void set_number_of_pages(int n);
-    int get_number_of_pages() { return number_of_pages; }
+    int get_number_of_pages();
+    int get_page_faults();
 
     void add_access(std::string a);
-    int find_LFU();
-    bool page_hit(std::string a);
 
     LFU_Analysis();
     LFU_Analysis(const LFU_Analysis& orig);
@@ -73,6 +73,10 @@ public:
 private:
     std::vector<access> accesses;
     int number_of_pages;
+    int page_faults;
+
+    int find_LFU();
+    bool page_hit(std::string a);
 };
 
 #endif /* LFU_ANALYSIS_H */
