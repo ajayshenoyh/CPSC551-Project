@@ -61,26 +61,22 @@ public:
     void set_accesses(std::vector<std::string> a);
     void print();
     void set_number_of_pages(int n);
-
-    int get_number_of_pages() {
-        return number_of_pages;
-    }
-
-    void update_uses();
+    int get_number_of_pages();
+    int get_page_faults();
 
     void add_access(std::string a);
-    int find_MRU();
-    bool page_hit(std::string a);
-    void add_for_presentation(std::string a);
-    void presentation();
     MRU_Analysis();
     MRU_Analysis(const MRU_Analysis& orig);
     virtual ~MRU_Analysis();
 private:
     std::vector<access> accesses;
-    std::vector< std::vector<std::string> > display_all;
     //std::vector<std::string>> ;
     int number_of_pages;
+    int page_faults;
+    
+    int find_MRU();
+    void update_uses();
+    bool page_hit(std::string a);
 };
 
 #endif /* MRU_ANALYSIS_H */

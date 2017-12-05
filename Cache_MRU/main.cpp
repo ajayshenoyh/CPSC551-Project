@@ -24,25 +24,25 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    cout << "Hello World\n";
     MRU_Analysis analysis;
     char yes;
     char choice;
-    int pages;
-//    cout << "Do you want input(i) custom accesses or use standard(s) ones?\n";
-//    cin >> choice;
-    choice = 's';
-    if (choice == 'i') {
+    int frames;
+    cout << "Demo Mode(y/n)\n";
+    cin >> choice;
+    if (choice == 'n') {
+        cout << "How many frames are there?";
+        cin >> frames;
+        analysis.set_number_of_pages(frames);
         do {
             string input;
+            cout << "Please input a reference: ";
             cin >> input;
             analysis.add_access(input);
             cout << "do you want to continue?\n";
             cin >> yes;
         } while (yes != 'n');
-    } else if (choice == 's') {
-//        cout << "How many pages are there?";
-//        cin >> pages;
+    } else if (choice == 'y') {
         analysis.set_number_of_pages(3);
         analysis.add_access("7");
         analysis.add_access("0");
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
         analysis.add_access("1");
     }
     //analysis.print();
-//    analysis.presentation();
+    cout << "The number of page faults are " << analysis.get_page_faults() << endl;
     return 0;
 }
 
