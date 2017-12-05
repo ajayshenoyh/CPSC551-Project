@@ -24,49 +24,54 @@ int main(int argc, char** argv) {
     cout << "Hello World\n";
     Analysis dowork;
     vector<string> accesses;
+    string input;
+    int frames;
     char yes;
     char choice;
-    cout << "Do you want input(i) custom accesses or use standard(s) ones?\n";
+    cout << "Demo Mode(y/n)\n";
     cin >> choice;
-    if (choice == 'i') {
+    if (choice == 'n') {
+        cout << "How many pages are there?";
+        cin >> frames;
+        dowork.set_pages_in_phy_mem(frames);
         do {
-            string input;
+            cout << "Please input a reference: ";
             cin >> input;
             accesses.push_back(input);
-            cout << "do you want to continue?\n";
+            cout << "Do you want to continue?\n";
             cin >> yes;
         } while (yes != 'n');
-    } else if (choice == 's') {
-        accesses.push_back("aaaaaaaa");
-        accesses.push_back("aaaaaaaa");
-        accesses.push_back("aaaaaaaa");
-        accesses.push_back("hhhhhhhh");
-        accesses.push_back("bbbbbbbb");
-        accesses.push_back("cccccccc");
-        accesses.push_back("aaaaaaaa");
-        accesses.push_back("cccccccc");
-        accesses.push_back("dddddddd");
+    } else if (choice == 'y') {
+        dowork.set_pages_in_phy_mem(3);
+        accesses.push_back("7");
+        accesses.push_back("0");
+        accesses.push_back("1");
+        accesses.push_back("2");
+        accesses.push_back("0");
+        accesses.push_back("3");
+        accesses.push_back("0");
+        accesses.push_back("4");
+        accesses.push_back("2");
+        accesses.push_back("3");
+        accesses.push_back("0");
+        accesses.push_back("3");
+        accesses.push_back("0");
+        accesses.push_back("3");
+        accesses.push_back("2");
+        accesses.push_back("1");
+        accesses.push_back("2");
+        accesses.push_back("0");
+        accesses.push_back("1");
+        accesses.push_back("7");
+        accesses.push_back("0");
+        accesses.push_back("1");
     }
     dowork.setAccesses(accesses);
     dowork.calculations();
-    dowork.print_data();
 
-    //    vector<string> inputs;
-    //    string input;
-    //    char proceed = 'n';
-    //    do {
-    //        cout << "Please input an access: ";
-    //        cin >> input;
-    //        inputs.push_back(input);
-    //        cout << "Would you like to continue?\n";
-    //        cin >> proceed;
-    //        proceed = toupper(proceed);
-    //    } while (proceed == 'y');
-    //    for (int i = 0; i < int(inputs.size()); i++) {
-    //        cout << inputs[i] << endl;
-    //    }
-    int pause;
-    //    cin >> pause;
+    cout << "The number of page faults are " << dowork.get_page_faults() << endl; 
+    //int pause;
+    //cin >> pause;
     return 0;
 }
 

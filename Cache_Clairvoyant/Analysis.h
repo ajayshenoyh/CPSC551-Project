@@ -51,6 +51,8 @@ struct access {
     void decriment_next_access() {
         if (next_access > 0) {
             next_access--;
+        } else if (next_access = 0) {
+            next_access = last_occurrence;
         }
     }
 
@@ -58,6 +60,8 @@ struct access {
         if (next_access > 0) {
             next_access_ratio = (1 / (double) next_access);
             removability_ratio = (1 - (next_access_ratio * occurrences));
+            //removability_ratio = (1 - (1 / (double) occurrences));
+            //removability_ratio = (1 - next_access_ratio);
         } else {
             next_access_ratio = -1;
             removability_ratio = 1;
@@ -84,7 +88,7 @@ struct access {
     }
 
     void set_next_access(int n) {
-        if (n > 0 || n == -2) {
+        if (n > 0 || n == last_occurrence) {
             next_access = n;
         }
     }
@@ -113,6 +117,7 @@ public:
     void print_data();
     void set_pages_in_phy_mem(int p);
     int get_pages_in_phy_mem();
+    int get_page_faults();
     void calculations();
     void handle_access(int current_index);
     void simulate();
@@ -128,6 +133,7 @@ public:
     virtual ~Analysis();
 private:
     int pages_in_phy_mem;
+    int page_faults;
     vector<access> accesses;
     vector<access *> memory;
 

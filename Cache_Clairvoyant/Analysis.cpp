@@ -66,6 +66,10 @@ int Analysis::get_pages_in_phy_mem() {
     return pages_in_phy_mem;
 }
 
+int Analysis::get_page_faults() {
+    return page_faults;
+}
+
 void Analysis::calculations() {
     int size = accesses.size();
     if (size > 0) {
@@ -104,6 +108,7 @@ void Analysis::handle_access(int current_index) {
 }
 
 void Analysis::simulate() {
+    int access_to_replace;
     for (int i = 0; i < accesses.size(); i++) {
         accesses[i].calculate_ratio();
         //cout << accesses[i].next_access_ratio << ' ' << accesses[i].removability_ratio << endl;
@@ -111,13 +116,14 @@ void Analysis::simulate() {
             if (memory.size() != (pages_in_phy_mem)) {
                 memory.push_back(&accesses[i]);
                 std::cout << "page fault " << accesses[i].get_name() << " added\n";
+                page_faults++;
             } else {
-                int access_to_replace = find_replacee(i);
-                std::cout << "page fault " << accesses[access_to_replace].get_name() << " replaced with " << accesses[i].get_name() << std::endl;
-                access newA(accesses[i]);
+                access_to_replace = find_replacee(i);
+                std::cout << "page fault " << memory[access_to_replace]->get_name() << " replaced with " << accesses[i].get_name() << std::endl;
+                //access newA(accesses[i]);
                 //std::cout << "name " << newA.get_name() << "  next access " << newA.get_next_access() << " occurrences " << newA.get_occurrences() << std::endl;
-                memory.erase(memory.begin() + access_to_replace);
-                memory.insert(memory.begin() + access_to_replace, &newA);
+                memory[access_to_replace] = &accesses[i];
+                page_faults++;
             }
         }
         update_next_accesses(i);
@@ -134,7 +140,7 @@ void Analysis::update_next_accesses(int i) {
 }
 
 void Analysis::update_occurances(int i) {
-    int this_index;
+    int this_index = 0;
     for (; i < accesses.size(); i++) {
         if (accesses[this_index].get_name() == accesses[i].get_name()) {
             accesses[i].sub_occurrence();
@@ -168,6 +174,7 @@ int Analysis::size() {
 
 Analysis::Analysis() {
     set_pages_in_phy_mem(4);
+    page_faults = 0;
 }
 
 Analysis::Analysis(const Analysis& orig) {
